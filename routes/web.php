@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\AluguelController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ConsoleController;
+use App\Models\Console;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +19,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $consoles = Console::all();
+    return view('welcome', compact('consoles'));
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('clientes', ClienteController::class);
+Route::resource('alugueis', AluguelController::class);
+Route::resource('consoles', ConsoleController::class);
